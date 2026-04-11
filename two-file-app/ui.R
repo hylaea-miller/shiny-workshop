@@ -1,6 +1,9 @@
 # ---- user interface ----
 ui <- navbarPage(
   
+  theme = "app-fresh-theme.css",
+
+  
   # title ----
   title = "LTER Animal Data Explorer",
   
@@ -64,7 +67,9 @@ ui <- navbarPage(
                  mainPanel(
                    
                    
-                   plotOutput(outputId = "trout_scatterplot_output")
+                   plotOutput(outputId = "trout_scatterplot_output") %>% 
+                     withSpinner(color = "blue", type = 8)
+            
                    
                  ) # End trout mainPanel
                  

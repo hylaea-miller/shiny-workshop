@@ -4,13 +4,18 @@ server <- function(input, output) {
   # filter trout data ----
   trout_filtered_df <- reactive({
     
+    validate(
+      need(length(input$channel_type_input) > 0, "Please select at least one channel type to visualize data for."),
+      need(length(input$section_input) > 0, "Please select at least one section (clear cut forest or old growth forest) to visualize data for.")
+    )
+    
     clean_trout |>
       filter(channel_type %in% c(input$channel_type_input)) %>% 
       filter(section %in% c(input$section_input))
     
   })
   
-  # trout scatterplot ----
+  # render trout scatterplot ----
   output$trout_scatterplot_output <- renderPlot({
     
     ggplot(trout_filtered_df(), aes(x = length_mm, y = weight_g, 
@@ -36,14 +41,23 @@ server <- function(input, output) {
            shape = "Channel Type") +
       myCustomTheme()
     
-  }) 
+  },
+
+  alt = "A scatterplot of the relationship between cutthroat trout lengths (mm) and weights (g). Trout tend to be longer, but weigh less in waterways within the old growth forest. Trout tend to be shorter, but weigh more in waterways within the clear cut forest."
+  
+  ) 
   
   
   # filter for island ----
   island_df <- reactive({
     
+    validate(
+      need(length(input$penguin_island_input) > 0, "Please select at least one island type to visualize data for."))
+    
     penguins %>% 
       filter(island %in% input$penguin_island_input)
+    
+ 
   })
   
  
@@ -57,7 +71,11 @@ server <- function(input, output) {
            fill = "Penguin species") +
       myCustomTheme()
     
-  })
+  },
+  
+  alt = "A histogram of penguin flipper lengths (mm). Adélie penguins tend to have the smallest flipper lengths and Gentoo have the largest." 
+  )
+  
   
     
     

@@ -6,6 +6,9 @@ library(palmerpenguins)
 library(shinyWidgets)
 library(markdown)
 library(rsconnect)
+library(shinycssloaders)
+library(DT)
+library(fresh)
 
 
 # data wrangling ---
